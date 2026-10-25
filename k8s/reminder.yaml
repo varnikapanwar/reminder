@@ -24,13 +24,12 @@ kind: Service
 metadata:
   name: reminder-v1-service
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: reminder-v1
   ports:
     - port: 80
       targetPort: 80
-      nodePort: 30084
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -58,13 +57,12 @@ kind: Service
 metadata:
   name: reminder-v2-service
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: reminder-v2
   ports:
     - port: 80
       targetPort: 80
-      nodePort: 30085
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -98,10 +96,9 @@ kind: Service
 metadata:
   name: reminder-v3-service
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: reminder-v3
   ports:
     - port: 80
       targetPort: 80
-      nodePort: 30086
