@@ -1,11 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reminder | Stay on Track</title>
+  <title>Reminder V1 | Stay on Track</title>
   <style>
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -13,15 +15,29 @@
       background: linear-gradient(135deg, #eef2ff, #f8fafc);
       color: #172033;
     }
+
     header {
       background: #4338ca;
       color: white;
       padding: 28px 20px;
       text-align: center;
     }
-    header h1 { margin: 0 0 8px; font-size: 32px; }
-    header p { margin: 0; color: #e0e7ff; }
-    main { width: min(760px, 92%); margin: 30px auto; }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 32px;
+    }
+
+    header p {
+      margin: 0;
+      color: #e0e7ff;
+    }
+
+    main {
+      width: min(760px, 92%);
+      margin: 30px auto;
+    }
+
     .panel {
       background: white;
       padding: 24px;
@@ -29,8 +45,18 @@
       border-radius: 16px;
       box-shadow: 0 8px 28px #1e293b12;
     }
-    h2 { margin-top: 0; font-size: 21px; }
-    label { display: block; font-weight: 600; margin: 14px 0 7px; }
+
+    h2 {
+      margin-top: 0;
+      font-size: 21px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin: 14px 0 7px;
+    }
+
     input {
       width: 100%;
       padding: 12px;
@@ -38,6 +64,7 @@
       border-radius: 9px;
       font-size: 15px;
     }
+
     button {
       border: 0;
       border-radius: 9px;
@@ -46,10 +73,38 @@
       font-weight: 600;
       font-size: 14px;
     }
-    .primary { background: #4338ca; color: white; margin-top: 18px; }
-    .delete { background: #fee2e2; color: #b91c1c; }
-    .done { background: #dcfce7; color: #166534; }
-    #status { color: #475569; min-height: 20px; margin-bottom: 0; }
+
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #a5b4fc;
+      outline-offset: 2px;
+    }
+
+    .primary {
+      background: #4338ca;
+      color: white;
+      margin-top: 18px;
+    }
+
+    .primary:hover {
+      background: #3730a3;
+    }
+
+    .delete {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .delete:hover {
+      background: #fecaca;
+    }
+
+    #status {
+      color: #475569;
+      min-height: 20px;
+      margin-bottom: 0;
+    }
+
     .reminder {
       border: 1px solid #e2e8f0;
       border-left: 4px solid #6366f1;
@@ -61,37 +116,86 @@
       justify-content: space-between;
       gap: 12px;
     }
-    .reminder h3 { margin: 0 0 7px; font-size: 16px; overflow-wrap: anywhere; }
-    .reminder p { margin: 0 0 9px; color: #64748b; font-size: 13px; }
-    .actions { display: flex; gap: 7px; flex-shrink: 0; }
-    .empty { color: #64748b; text-align: center; padding: 20px 0; }
-    .tag { font-size: 12px; font-weight: 700; color: #4338ca; }
-    footer { text-align: center; color: #64748b; padding: 0 20px 25px; font-size: 13px; }
+
+    .reminder h3 {
+      margin: 0 0 7px;
+      font-size: 16px;
+      overflow-wrap: anywhere;
+    }
+
+    .reminder p {
+      margin: 0 0 9px;
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    .tag {
+      font-size: 12px;
+      font-weight: 700;
+      color: #4338ca;
+    }
+
+    .tag.due {
+      color: #b91c1c;
+    }
+
+    .actions {
+      display: flex;
+      gap: 7px;
+      flex-shrink: 0;
+    }
+
+    .empty {
+      color: #64748b;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    footer {
+      text-align: center;
+      color: #64748b;
+      padding: 0 20px 25px;
+      font-size: 13px;
+    }
+
     @media (max-width: 520px) {
-      .reminder { align-items: flex-start; flex-direction: column; }
+      .reminder {
+        align-items: flex-start;
+        flex-direction: column;
+      }
     }
   </style>
 </head>
+
 <body>
   <header>
-    <h1>🔔 Reminder</h1>
+    <h1>🔔 Reminder V1</h1>
     <p>Plan your tasks. Never miss a moment.</p>
   </header>
 
   <main>
     <section class="panel">
       <h2>Add a Reminder</h2>
+
       <form id="reminder-form">
         <label for="title">Reminder title</label>
-        <input id="title" type="text" maxlength="120"
-               placeholder="e.g. Submit assignment" required>
+        <input
+          id="title"
+          type="text"
+          maxlength="120"
+          placeholder="e.g. Submit assignment"
+          required
+        >
 
         <label for="due">Date and time</label>
         <input id="due" type="datetime-local" required>
 
-        <button class="primary" type="submit">+ Set Reminder</button>
+        <button class="primary" type="submit">
+          + Set Reminder
+        </button>
       </form>
-      <p id="status" role="status"></p>
+
+      <p id="status" role="status" aria-live="polite"></p>
     </section>
 
     <section class="panel">
@@ -100,27 +204,52 @@
     </section>
   </main>
 
-  <footer>Reminder App · Add · Notify · Delete</footer>
+  <footer>Reminder V1 · Add · Notify · Delete</footer>
 
   <script>
     const STORAGE_KEY = "reminder-app-items-v1";
+
     const form = document.getElementById("reminder-form");
     const titleInput = document.getElementById("title");
     const dueInput = document.getElementById("due");
     const list = document.getElementById("reminder-list");
     const status = document.getElementById("status");
+
+    // Tracks reminders already alerted during this page session.
     const notified = new Set();
 
     let reminders = [];
+
     try {
-      reminders = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-      if (!Array.isArray(reminders)) reminders = [];
+      const stored = JSON.parse(
+        localStorage.getItem(STORAGE_KEY) || "[]"
+      );
+
+      if (Array.isArray(stored)) {
+        reminders = stored.filter(item =>
+          item &&
+          typeof item.id === "string" &&
+          typeof item.title === "string" &&
+          typeof item.due === "string" &&
+          !Number.isNaN(new Date(item.due).getTime())
+        );
+      }
     } catch {
       reminders = [];
     }
 
     function save() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(reminders));
+      try {
+        localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify(reminders)
+        );
+        return true;
+      } catch {
+        status.textContent =
+          "Could not save reminders in this browser.";
+        return false;
+      }
     }
 
     function render() {
@@ -129,7 +258,8 @@
       if (reminders.length === 0) {
         const empty = document.createElement("p");
         empty.className = "empty";
-        empty.textContent = "No reminders yet. Add your first reminder above.";
+        empty.textContent =
+          "No reminders yet. Add your first reminder above.";
         list.appendChild(empty);
         return;
       }
@@ -141,39 +271,39 @@
           card.className = "reminder";
 
           const details = document.createElement("div");
+
           const heading = document.createElement("h3");
           heading.textContent = item.title;
 
           const time = document.createElement("p");
-          time.textContent = new Date(item.due).toLocaleString();
+          time.textContent =
+            new Date(item.due).toLocaleString();
 
           const tag = document.createElement("span");
-          tag.className = "tag";
-          tag.textContent = item.done ? "COMPLETED" :
-            (new Date(item.due) <= new Date() ? "DUE" : "UPCOMING");
+          const isDue = new Date(item.due).getTime() <= Date.now();
+
+          tag.className = isDue ? "tag due" : "tag";
+          tag.textContent = isDue ? "DUE" : "UPCOMING";
 
           details.append(heading, time, tag);
 
           const actions = document.createElement("div");
           actions.className = "actions";
 
-          if (!item.done) {
-            const doneButton = document.createElement("button");
-            doneButton.className = "done";
-            doneButton.textContent = "Done";
-            doneButton.addEventListener("click", () => {
-              item.done = true;
-              save();
-              render();
-            });
-            actions.appendChild(doneButton);
-          }
-
           const deleteButton = document.createElement("button");
           deleteButton.className = "delete";
           deleteButton.textContent = "Delete";
+          deleteButton.setAttribute(
+            "aria-label",
+            "Delete reminder: " + item.title
+          );
+
           deleteButton.addEventListener("click", () => {
-            reminders = reminders.filter(r => r.id !== item.id);
+            reminders = reminders.filter(
+              reminder => reminder.id !== item.id
+            );
+
+            notified.delete(item.id);
             save();
             render();
             status.textContent = "Reminder deleted.";
@@ -189,27 +319,45 @@
       event.preventDefault();
 
       const title = titleInput.value.trim();
-      const due = new Date(dueInput.value);
+      const dueValue = dueInput.value;
+      const due = new Date(dueValue);
 
-      if (!title || !dueInput.value || Number.isNaN(due.getTime())) {
-        status.textContent = "Please enter a valid title and date/time.";
+      if (
+        !title ||
+        !dueValue ||
+        Number.isNaN(due.getTime())
+      ) {
+        status.textContent =
+          "Please enter a valid title and date/time.";
         return;
       }
 
       if (due.getTime() <= Date.now()) {
-        status.textContent = "Please select a future date and time.";
+        status.textContent =
+          "Please select a future date and time.";
         return;
       }
 
-      reminders.push({
-        id: (crypto.randomUUID ? crypto.randomUUID() :
-          Date.now().toString() + Math.random().toString(16).slice(2)),
+      const reminder = {
+        id: (
+          crypto.randomUUID
+            ? crypto.randomUUID()
+            : Date.now().toString() +
+              Math.random().toString(16).slice(2)
+        ),
         title,
-        due: due.toISOString(),
-        done: false
-      });
+        due: due.toISOString()
+      };
 
-      save();
+      reminders.push(reminder);
+
+      if (!save()) {
+        reminders = reminders.filter(
+          item => item.id !== reminder.id
+        );
+        return;
+      }
+
       render();
       form.reset();
       status.textContent = "Reminder set successfully!";
@@ -219,8 +367,11 @@
       const now = Date.now();
 
       reminders.forEach(item => {
-        if (!item.done && new Date(item.due).getTime() <= now &&
-            !notified.has(item.id)) {
+        if (
+          new Date(item.due).getTime() <= now &&
+          !notified.has(item.id)
+        ) {
+          // Mark first so a repeated check does not alert twice.
           notified.add(item.id);
           alert("⏰ Reminder: " + item.title);
         }
@@ -229,8 +380,21 @@
       render();
     }
 
+    // Set the minimum date/time to the current local time.
+    function updateMinimumDate() {
+      const now = new Date();
+      now.setMinutes(
+        now.getMinutes() - now.getTimezoneOffset()
+      );
+
+      dueInput.min = now.toISOString().slice(0, 16);
+    }
+
+    updateMinimumDate();
     render();
     checkDueReminders();
+
+    // Check due reminders every five seconds while the page is open.
     setInterval(checkDueReminders, 5000);
   </script>
 </body>
